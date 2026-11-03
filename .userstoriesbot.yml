@@ -1,0 +1,17 @@
+# Showcase fork only (never part of an upstream pull request).
+version: 1
+app:
+  install: "npm ci"
+  # No app.seed: the fork-only default/scaffold/ (index.json, settings.json, characters/Chatbot_T4LK1-e.png)
+  # is copied into data/default-user/ by the server's own content check at startup, once per data folder
+  # (logged in content.log, never overwritten). Do not set SILLYTAVERN_SKIPCONTENTCHECK, it would skip the copy.
+  start: node server.js --port {port} --listen true --browserLaunchEnabled false
+  env:
+    SILLYTAVERN_WHITELIST: '["127.0.0.1","::1","172.16.0.0/12"]'
+  url: http://localhost:{port}
+  readyPath: /
+  readyStatus: 200
+  runtime: node22
+demo:
+  maxVideos: 1
+  beforePass: true
